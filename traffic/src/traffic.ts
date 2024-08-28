@@ -33,11 +33,12 @@ const simulateUserActivity = async (user: User, companies: Company[]) => {
   while (simulationActive) {
     const company = companies[Math.floor(Math.random() * companies.length)];
     const amount = Math.floor(Math.random() * 10) + 1;
-    const priceModifier = getRandomPriceModifier(0.9, 1.1);
 
     if (Math.random() < 0.5) {
+      const priceModifier = getRandomPriceModifier(1, 1.15);
       await simulateBuying(user.id, company.id, amount, priceModifier);
     } else {
+      const priceModifier = getRandomPriceModifier(0.9, 1);
       await simulateSelling(user.id, company.id, amount, priceModifier);
     }
 
@@ -75,10 +76,10 @@ const startSimulation = async () => {
     const user = await createUser();
     if (user) {
       users.push(user);
-      await addMoneyToUser(user.id, Math.floor(Math.random() * 9000) + 1000);
+      await addMoneyToUser(user.id, Math.floor(Math.random() * 90000) + 10000);
 
       for (const company of companies) {
-        await addStock(user.id, company.id, Math.floor(Math.random() * 1000) + 1);
+        await addStock(user.id, company.id, Math.floor(Math.random() * 9000) + 1000);
       }
     }
     await delay(REQUEST_TIME / 10);

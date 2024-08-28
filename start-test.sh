@@ -27,7 +27,7 @@ while IFS= read -r params; do
   # Czekaj 1 godzinę i 15 minut (4500 sekund)
   echo "Oczekiwanie 1 godzinę i 15 minut..."
   sleep 4800
-  # sleep 30
+  # sleep 900
 
   # Zatrzymanie kontenerów
   echo "Zatrzymuję kontenery..."
