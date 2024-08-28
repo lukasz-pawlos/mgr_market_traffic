@@ -24,8 +24,8 @@ while IFS= read -r params; do
   # Uruchomienie Dockera za pomocą skryptu start-docker.sh z parametrami
   ./start-docker.sh $params
 
-  # Czekaj 1 godzinę i 15 minut (4500 sekund)
-  echo "Oczekiwanie 1 godzinę i 15 minut..."
+  # Czekaj
+  echo "Oczekiwanie"
   sleep 4800
   # sleep 900
 
