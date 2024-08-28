@@ -32,7 +32,7 @@ let simulationActive = true; // Flaga kontrolująca symulację
 const simulateUserActivity = async (user: User, companies: Company[]) => {
   while (simulationActive) {
     const company = companies[Math.floor(Math.random() * companies.length)];
-    const amount = Math.floor(Math.random() * 10) + 1;
+    const amount = Math.floor(Math.random() * 5) + 1;
 
     if (Math.random() < 0.5) {
       const priceModifier = getRandomPriceModifier(1, 1.15);
@@ -67,7 +67,7 @@ const startSimulation = async () => {
     const company = await createCompany();
     if (company) {
       companies.push(company);
-      await createStockRate(company.id, Math.random() * 10 + 1);
+      await createStockRate(company.id, 10);
     }
     await delay(REQUEST_TIME / 10);
   }
@@ -76,10 +76,10 @@ const startSimulation = async () => {
     const user = await createUser();
     if (user) {
       users.push(user);
-      await addMoneyToUser(user.id, Math.floor(Math.random() * 90000) + 10000);
+      await addMoneyToUser(user.id, 1000000);
 
       for (const company of companies) {
-        await addStock(user.id, company.id, Math.floor(Math.random() * 9000) + 1000);
+        await addStock(user.id, company.id, 100000);
       }
     }
     await delay(REQUEST_TIME / 10);

@@ -142,11 +142,16 @@ export const simulateBuying = async (
 ) => {
   try {
     const currentRate = Number(await getCurrentStockRate(companyId));
-    if (currentRate !== null) {
-      const max_price = Number((currentRate * priceModifier).toFixed(2)); // Dynamicznie modyfikuj cenę na podstawie priceModifier
-      const date_limit = new Date(Date.now() + 60000 * 3); // 3 minuty do przodu
-      await axios.post(`${API_URL}/buyoffer/create`, { userId, companyId, max_price, amount, date_limit });
+
+    // Dodaj walidację, żeby currentRate nie mógł być 0 ani mniejszy
+    if (currentRate <= 0) {
+      console.error(`Invalid stock rate for company ${companyId}: ${currentRate}`);
+      return; // Zakończ funkcję, jeśli currentRate jest niepoprawny
     }
+
+    const max_price = Number((currentRate * priceModifier).toFixed(2)); // Dynamicznie modyfikuj cenę
+    const date_limit = new Date(Date.now() + 60000 * 6); // 3 minuty do przodu
+    await axios.post(`${API_URL}/buyoffer/create`, { userId, companyId, max_price, amount, date_limit });
   } catch (error) {
     // @ts-ignore
     console.error(error.response.data.message);
@@ -162,11 +167,16 @@ export const simulateSelling = async (
 ) => {
   try {
     const currentRate = Number(await getCurrentStockRate(companyId));
-    if (currentRate !== null) {
-      const min_price = Number((currentRate * priceModifier).toFixed(2)); // Dynamicznie modyfikuj cenę na podstawie priceModifier
-      const date_limit = new Date(Date.now() + 60000 * 3); // 1 godzina do przodu
-      await axios.post(`${API_URL}/selloffer/create`, { userId, companyId, min_price, amount, date_limit });
+
+    // Walidacja, żeby currentRate nie mógł być 0 ani mniejszy
+    if (currentRate <= 0) {
+      console.error(`Invalid stock rate for company ${companyId}: ${currentRate}`);
+      return; // Zakończ funkcję, jeśli currentRate jest niepoprawny
     }
+
+    const min_price = Number((currentRate * priceModifier).toFixed(2));
+    const date_limit = new Date(Date.now() + 60000 * 6);
+    await axios.post(`${API_URL}/selloffer/create`, { userId, companyId, min_price, amount, date_limit });
   } catch (error) {
     // @ts-ignore
     console.error(error.response.data.message);
