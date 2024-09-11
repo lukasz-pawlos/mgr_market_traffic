@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Sprawdzenie, czy przekazano prawidłową liczbę parametrów
-if [ "$#" -ne 7 ]; then
-    echo "Użycie: $0 <number_of_containers> <number_of_companies_per_container> <number_of_cache_elem_per_company> <cache_time_in_sec> <number_of_users_for_traffic> <traffic_time_request> <transaction_time>"
+if [ "$#" -ne 6 ]; then
+    echo "Użycie: $0 <number_of_containers> <number_of_companies_per_container> <number_of_cache_elem_per_company> <cache_time_in_sec> <number_of_users_for_traffic> <traffic_time_request>"
     exit 1
 fi
 
@@ -12,7 +12,6 @@ NUM_USERS=$3
 NUM_OF_CACHE=$4
 CACHE_TIME=$5
 TRAFFIC_TIME_REQUEST=$6
-TRANSACTION_TIME=$7
 
 # Oblicz całkowitą liczbę firm
 NUM_COMPANIES=$(( NUM_CONTAINERS * NUM_COMPANIES_PER_CONTAINER ))
